@@ -87,17 +87,17 @@
 </form>
 <script>
 const form = document.querySelector("#userinfo");
-
+const url = 'https://script.google.com/macros/s/AKfycbyLJibLUxEfNuwgN69IoFUGI5eEdr9Ne-QfyBihyUChf2nHV9drBFWswyTLl-obWDtCGA/exec';
 async function sendData() {
     // FormData オブジェクトをフォーム要素に関連付ける
     const formData = new FormData(form);
 
     try {
-      const response = await fetch("https://script.google.com/macros/s/AKfycbyLJibLUxEfNuwgN69IoFUGI5eEdr9Ne-QfyBihyUChf2nHV9drBFWswyTLl-obWDtCGA/exec", {
+      const response = await fetch(url, {
         method: "POST",
         // FormData インスタンスをリクエスト本体として設定
         body: formData,
-        mode: "no-cors",
+        mode:"no-cors"
       });
       console.log(await response.json());
     } catch (e) {
