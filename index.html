@@ -74,47 +74,47 @@
 
 </body>
 </html> -->
-<form id="userinfo">
-  <p>
-    <label for="username">名前を入力してください:</label>
-    <input type="text" id="username" name="username" value="Dominic" />
-  </p>
-  <p>
-    <label for="avatar">アバターを選択してください</label>
-    <input type="file" id="avatar" name="avatar" required />
-  </p>
-  <input type="submit" value="Submit" />
-</form>
-<script>
-const form = document.querySelector("#userinfo");
-const url = 'https://script.google.com/macros/s/AKfycbyLJibLUxEfNuwgN69IoFUGI5eEdr9Ne-QfyBihyUChf2nHV9drBFWswyTLl-obWDtCGA/exec';
-async function sendData() {
-    // FormData オブジェクトをフォーム要素に関連付ける
-    const formData = new FormData(form);
-    const response = await fetch(url, {
-        method: "POST",
-        // FormData インスタンスをリクエスト本体として設定
-        body: formData,
-        mode:"no-cors"
-      });
-      console.log(await response.json());
-    // try {
-    //   const response = await fetch(url, {
-    //     method: "POST",
-    //     // FormData インスタンスをリクエスト本体として設定
-    //     body: formData,
-    //     mode:"no-cors"
-    //   });
-    //   console.log(await response.json());
-    // } catch (e) {
-    //   console.error(e);
-    // }
-  }
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script> <!-- Added -->
+  </head>
+  <body>
+  <form action="myGAS_Link" id="cc-form" method="post">
+  <div class="fTop">
+    <span>Name:* </span><input name="txtName" type="text" placeholder="Your Name" id="fname" required="" autofocus>
+    <span>E-Mail:* </span><input name="txtEmail" type="email" placeholder="Your e-Mail" id="femail" required="">
+  </div>
+  <!--------------------------->
+  <div class="fSet1">
+    <span>Notes:</span><br/>
+    <textarea name="txtArea" id="fTextArea" rows="8"></textarea>
+  </div>
+  <!--------------------------->
+  <div id="data"></div> <!-- Added -->
+  <div class="fSub">
+   <span>Upload your File:* </span><input name="fFileAttach" id="fFileAttach" type="file" required>
+   <input id="submit" type="submit">
+  </div>
+ </form>
+  </body>
 
-  // フォーム送信を引き継ぐ
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    sendData();
-  });
+<!-- Added -->
+<script>
+$('#fFileAttach').on("change", function() {
+    var file = this.files[0];
+    var fr = new FileReader();
+    fr.fileName = file.name;
+    fr.onload = function(e) {
+        html = '<input type="hidden" name="data" value="'+e.target.result.replace(/^.*,/, '')+'" >';
+        html += '<input type="hidden" name="filename" value="'+e.target.fileName+'" >';
+        html += '<input type="hidden" name="mimetype" value="' + e.target.result.match(/^.*(?=;)/)[0] + '" >';
+        $("#data").empty().append(html); // Modified
+    }
+    fr.readAsDataURL(file);
+});
 </script>
+
+</html>
 
