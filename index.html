@@ -54,19 +54,20 @@
             // }).fail(function(error) {
             //     //エラー時の処理a
             // });
+            e.preventDefault();
+            e.stopImmediatePropagation();
             $.ajax({
-                type:"post",
-                url: url,
+                type: "POST",
                 data: formData,
-                dataType: "jsonp",
+                dataType: "json",
+                url: url,
+                processData: false,
+                contentType: false,
                 success: function(data) {
-                    // callbackFunc(data);
+                    alert('Sucess! Form data posted with file type of input also!');
                 }
-            }).fail(function(jqXHR, textStatus, errorThrown ) {
-                console.log("XMLHttpRequest : " + jqXHR.status + "\ntextStatus     : " + textStatus + "\nerrorThrown    : " + errorThrown.message);
             });
-        });
-
+        })
 
 
         // $(document).ready(function () {
