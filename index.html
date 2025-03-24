@@ -97,6 +97,7 @@ async function sendData() {
         method: "POST",
         // FormData インスタンスをリクエスト本体として設定
         body: formData,
+        mode: "no-cors",
       });
       console.log(await response.json());
     } catch (e) {
