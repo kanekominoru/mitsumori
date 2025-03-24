@@ -42,18 +42,28 @@
             let formData = new FormData( form );
                 
             //ajax実行
+            // $.ajax({
+            //     url : url,
+            //     dataType: "html",
+            //     type : "post",
+            //     data : formData,  // dataに FormDataを指定
+            //     processData: false,  //ajaxがdataを整形しない指定
+            //     contentType: false  //contentTypeもfalseに指定
+            // }).done(function(resData) {
+            //     //成功時の処理
+            // }).fail(function(error) {
+            //     //エラー時の処理a
+            // });
             $.ajax({
-                url : url,
-                dataType: "html",
-                type : "post",
-                data : formData,  // dataに FormDataを指定
-                processData: false,  //ajaxがdataを整形しない指定
-                contentType: false  //contentTypeもfalseに指定
-            }).done(function(resData) {
-                //成功時の処理
-            }).fail(function(error) {
-                //エラー時の処理
-                alert(error.message);
+                type:"post",
+                url: url,
+                data: formData,
+                dataType: "jsonp",
+                success: function(data) {
+                    // callbackFunc(data);
+                }
+            }).fail(function(jqXHR, textStatus, errorThrown ) {
+                console.log("XMLHttpRequest : " + jqXHR.status + "\ntextStatus     : " + textStatus + "\nerrorThrown    : " + errorThrown.message);
             });
         });
 
