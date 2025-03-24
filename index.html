@@ -41,14 +41,21 @@
         let files = input.files;
         if (files.length > 0) {
 
+            let file_reader = new FileReader();
+            file_reader.readAsDataURL(files[0]);
+            
             // ここを変更
             let header = new Headers();
-            header.append("content-type", files[0].type);
+            header.append('Content-Type', 'application/json');
             header.append("content-length", files[0].size);
             formData.append("nick_name", nick_name.value);
             formData.append("file_data", files[0]);
+            let data = {
+                "title": "Bear",
+                "image": files[0],
+            };
             let req = new Request(url, {
-                body: files[0],
+                body: JSON.stringify(data),
                 headers: header,
                 method: "POST",
                 // CORSエラー回避
