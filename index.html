@@ -51,8 +51,9 @@
                 contentType: false  //contentTypeもfalseに指定
             }).done(function(resData) {
                 //成功時の処理
-            }).fail(function(resData) {
+            }).fail(function(error) {
                 //エラー時の処理
+                alert(error);
             });
         });
 
