@@ -1,4 +1,4 @@
-<html>
+<!-- <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -69,84 +69,45 @@
             }
         });
 
-        // $("#submit_btn").click(function (e) {
-        //     //formセレクタを取得
-        //     let form = $('#account_form').get(0);
-        //     //FormData オブジェクトを作成
-        //     let formData = new FormData( form );
-                
-        //     //ajax実行
-        //     // $.ajax({
-        //     //     url : url,
-        //     //     dataType: "html",
-        //     //     type : "post",
-        //     //     data : formData,  // dataに FormDataを指定
-        //     //     processData: false,  //ajaxがdataを整形しない指定
-        //     //     contentType: false  //contentTypeもfalseに指定
-        //     // }).done(function(resData) {
-        //     //     //成功時の処理
-        //     // }).fail(function(error) {
-        //     //     //エラー時の処理a
-        //     // });
-        //     e.preventDefault();
-        //     e.stopImmediatePropagation();
-        //     $.ajax({
-        //         type: "POST",
-        //         data: formData,
-        //         dataType: "json",
-        //         url: url,
-        //         processData: false,
-        //         contentType: false,
-        //         success: function(data) {
-        //             alert('Sucess! Form data posted with file type of input also!');
-        //         }
-        //     });
-        // })
-
-
-        // // $(document).ready(function () {
-        // //     const liffId = "2007083053-YNDKlL8v";
-        // //     initializeLiff(liffId);
-        // // })
-
-        // // function initializeLiff(liffId) {
-        // //     liff.init({
-        // //         liffId: liffId
-        // //     }).then(() => {
-        // //         initializeApp();
-        // //     }).catch((err) => {
-        // //         console.log('LIFF Initialization failed ', err);
-        // //     });
-        // // }
-
-        // // function sendText(text) {
-        // //     liff.sendMessages([{
-        // //         'type': 'text',
-        // //         'text': text
-        // //     }]).then(function () {
-        // //         liff.closeWindow();
-        // //     }).catch(function (error) {
-        // //         window.alert('Failed to send message ' + error);
-        // //     });
-        // // }
-
-        // // const params = (new URL(document.location)).searchParams;
-        // // const key = params.get('key');
-
-        // // $(function () {
-        // //     $('form').submit(function () {
-        // //         const name    = $('input[name="name"]').val();
-        // //         const bangou = $('input[name="bangou"]').val();
-        // //         const shushoujou  = $('input[name="shushoujou"]').val();
-        // //         const keika  = $('input[name="keika"]').val();
-        // //         const hatunetu = $('input[name="hatunetu"]').val();
-        // //         const msg = `${name}\n${bangou}\n${shushoujou}\n${keika}\n${hatunetu}`;
-        // //         sendText(msg);
-        // //         return false;
-        // //     });
-        // // });
 
     </script>
 
 </body>
-</html>
+</html> -->
+<form id="userinfo">
+  <p>
+    <label for="username">名前を入力してください:</label>
+    <input type="text" id="username" name="username" value="Dominic" />
+  </p>
+  <p>
+    <label for="avatar">アバターを選択してください</label>
+    <input type="file" id="avatar" name="avatar" required />
+  </p>
+  <input type="submit" value="Submit" />
+</form>
+<script>
+const form = document.querySelector("#userinfo");
+
+async function sendData() {
+    // FormData オブジェクトをフォーム要素に関連付ける
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbyLJibLUxEfNuwgN69IoFUGI5eEdr9Ne-QfyBihyUChf2nHV9drBFWswyTLl-obWDtCGA/exec", {
+        method: "POST",
+        // FormData インスタンスをリクエスト本体として設定
+        body: formData,
+      });
+      console.log(await response.json());
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  // フォーム送信を引き継ぐ
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    sendData();
+  });
+</script>
+
