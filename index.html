@@ -10,10 +10,6 @@
 <body>
 
     <form id="account_form" enctype="multipart/form-data" method="post">
-        <div class="email-area">
-          <span>メールアドレス：</span>
-          <input type="text" id="email" name="email"/>
-        </div>
         <div class="nick-name-area">
           <span>ニックネーム：</span>
           <input type="text" id="nick_name" name="nick_name"/>
@@ -35,82 +31,114 @@
     <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
     <script>
         const url = 'https://script.google.com/macros/s/AKfycbyLJibLUxEfNuwgN69IoFUGI5eEdr9Ne-QfyBihyUChf2nHV9drBFWswyTLl-obWDtCGA/exec';
-        $("#submit_btn").click(function (e) {
-            //formセレクタを取得
-            let form = $('#account_form').get(0);
-            //FormData オブジェクトを作成
-            let formData = new FormData( form );
-                
-            //ajax実行
-            // $.ajax({
-            //     url : url,
-            //     dataType: "html",
-            //     type : "post",
-            //     data : formData,  // dataに FormDataを指定
-            //     processData: false,  //ajaxがdataを整形しない指定
-            //     contentType: false  //contentTypeもfalseに指定
-            // }).done(function(resData) {
-            //     //成功時の処理
-            // }).fail(function(error) {
-            //     //エラー時の処理a
-            // });
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            $.ajax({
-                type: "POST",
-                data: formData,
-                dataType: "json",
-                url: url,
-                processData: false,
-                contentType: false,
-                success: function(data) {
-                    alert('Sucess! Form data posted with file type of input also!');
-                }
+
+
+        const input = document.querySelector(".file_data");
+        const nick_name = document.querySelector(".nick_name");
+        const btn = document.querySelector("#submit_btn");
+        const formData = new FormData();
+        btn.addEventListener("click", (e) => {
+        let files = input.files;
+        if (files.length > 0) {
+
+            // ここを変更
+            let url = url;
+            let header = new Headers();
+            header.append("content-type", files[0].type);
+            header.append("content-length", files[0].size);
+            formData.append("nick_name", nick_name.value);
+            formData.append("file_data", files[0]);
+            let req = new Request(url, {
+                body: files[0],
+                headers: header,
+                method: "POST",
+                // CORSエラー回避
+                mode: "no-cors",
             });
-        })
+            fetch(req)
+            .then((res) => console.log(res.status, res.statusText))
+            .catch(console.warn);
+            } else {
+                console.log("選択されていません");
+            }
+        });
 
-
-        // $(document).ready(function () {
-        //     const liffId = "2007083053-YNDKlL8v";
-        //     initializeLiff(liffId);
+        // $("#submit_btn").click(function (e) {
+        //     //formセレクタを取得
+        //     let form = $('#account_form').get(0);
+        //     //FormData オブジェクトを作成
+        //     let formData = new FormData( form );
+                
+        //     //ajax実行
+        //     // $.ajax({
+        //     //     url : url,
+        //     //     dataType: "html",
+        //     //     type : "post",
+        //     //     data : formData,  // dataに FormDataを指定
+        //     //     processData: false,  //ajaxがdataを整形しない指定
+        //     //     contentType: false  //contentTypeもfalseに指定
+        //     // }).done(function(resData) {
+        //     //     //成功時の処理
+        //     // }).fail(function(error) {
+        //     //     //エラー時の処理a
+        //     // });
+        //     e.preventDefault();
+        //     e.stopImmediatePropagation();
+        //     $.ajax({
+        //         type: "POST",
+        //         data: formData,
+        //         dataType: "json",
+        //         url: url,
+        //         processData: false,
+        //         contentType: false,
+        //         success: function(data) {
+        //             alert('Sucess! Form data posted with file type of input also!');
+        //         }
+        //     });
         // })
 
-        // function initializeLiff(liffId) {
-        //     liff.init({
-        //         liffId: liffId
-        //     }).then(() => {
-        //         initializeApp();
-        //     }).catch((err) => {
-        //         console.log('LIFF Initialization failed ', err);
-        //     });
-        // }
 
-        // function sendText(text) {
-        //     liff.sendMessages([{
-        //         'type': 'text',
-        //         'text': text
-        //     }]).then(function () {
-        //         liff.closeWindow();
-        //     }).catch(function (error) {
-        //         window.alert('Failed to send message ' + error);
-        //     });
-        // }
+        // // $(document).ready(function () {
+        // //     const liffId = "2007083053-YNDKlL8v";
+        // //     initializeLiff(liffId);
+        // // })
 
-        // const params = (new URL(document.location)).searchParams;
-        // const key = params.get('key');
+        // // function initializeLiff(liffId) {
+        // //     liff.init({
+        // //         liffId: liffId
+        // //     }).then(() => {
+        // //         initializeApp();
+        // //     }).catch((err) => {
+        // //         console.log('LIFF Initialization failed ', err);
+        // //     });
+        // // }
 
-        // $(function () {
-        //     $('form').submit(function () {
-        //         const name    = $('input[name="name"]').val();
-        //         const bangou = $('input[name="bangou"]').val();
-        //         const shushoujou  = $('input[name="shushoujou"]').val();
-        //         const keika  = $('input[name="keika"]').val();
-        //         const hatunetu = $('input[name="hatunetu"]').val();
-        //         const msg = `${name}\n${bangou}\n${shushoujou}\n${keika}\n${hatunetu}`;
-        //         sendText(msg);
-        //         return false;
-        //     });
-        // });
+        // // function sendText(text) {
+        // //     liff.sendMessages([{
+        // //         'type': 'text',
+        // //         'text': text
+        // //     }]).then(function () {
+        // //         liff.closeWindow();
+        // //     }).catch(function (error) {
+        // //         window.alert('Failed to send message ' + error);
+        // //     });
+        // // }
+
+        // // const params = (new URL(document.location)).searchParams;
+        // // const key = params.get('key');
+
+        // // $(function () {
+        // //     $('form').submit(function () {
+        // //         const name    = $('input[name="name"]').val();
+        // //         const bangou = $('input[name="bangou"]').val();
+        // //         const shushoujou  = $('input[name="shushoujou"]').val();
+        // //         const keika  = $('input[name="keika"]').val();
+        // //         const hatunetu = $('input[name="hatunetu"]').val();
+        // //         const msg = `${name}\n${bangou}\n${shushoujou}\n${keika}\n${hatunetu}`;
+        // //         sendText(msg);
+        // //         return false;
+        // //     });
+        // // });
 
     </script>
 
