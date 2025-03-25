@@ -31,10 +31,19 @@
   <script>
     const myForm = document.querySelector("#cc-form");
     const liffId = "2007083053-YNDKlL8v";
+    let userId = "";
     liff.init({liffId: liffId})
             .catch((err) => {
                 console.log(err);
             });
+    liff.ready.then(() => {
+        if (!liff.isLoggedIn()) {
+            liff.login();
+        }
+        const idToken = liff.getDecodedIDToken();
+        userId = idToken.sub;
+        $('form').append(`<input type="hidden" name="userId" value="${userId}">`);
+    });
     myForm.addEventListener("submit", (event)=>{
       sendText('text');
     });
