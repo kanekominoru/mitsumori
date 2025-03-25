@@ -5,36 +5,53 @@
 
   </head>
   <body>
-    <form action="https://script.google.com/macros/s/AKfycbyLJibLUxEfNuwgN69IoFUGI5eEdr9Ne-QfyBihyUChf2nHV9drBFWswyTLl-obWDtCGA/exec" id="cc-form" method="post" target="sendMessage">
-      <div class="fTop">
-        <span>Name:* </span><input name="txtName" type="text" placeholder="Your Name" id="fname" required="" autofocus>
-        <span>E-Mail:* </span><input name="txtEmail" type="email" placeholder="Your e-Mail" id="femail" required="">
+    <form action="https://script.google.com/macros/s/AKfycbyLJibLUxEfNuwgN69IoFUGI5eEdr9Ne-QfyBihyUChf2nHV9drBFWswyTLl-obWDtCGA/exec" id="cc-form" method="post" class="w-75 mx-auto" target="sendMessage">
+      <p class="mt-3">見積を希望している保険種目をお教えください</p>
+      <div>
+          <select class="form-control w-100 mt-1" name="syumoku">
+              <option selected>自動車</option>
+              <option>火災</option>
+              <option>生命保険</option>
+              <option>その他</option>
+          </select>
       </div>
-      <!--------------------------->
-      <div class="fSet1">
-        <span>Notes:</span><br/>
-        <textarea name="txtArea" id="fTextArea" rows="8"></textarea>
+      <p class="mt-3">※上記で生命保険を選んだ方は生命保険の種目を選択してください</p>
+      <div>
+          <select class="form-control w-100 mt-1" name="seihosyumoku">
+              <option>医療保険</option>
+              <option>がん保険</option>
+              <option>生命保険</option>
+          </select>
       </div>
-      <!--------------------------->
+      <p class="mt-3">希望する内容をお教えください</p>
+      <div>
+          <select class="form-control w-100 mt-1" name="kibonaiyo">
+              <option>他代理店からの切替</option>
+              <option>新規加入</option>
+          </select>
+      </div>
       <div id="data"></div> <!-- Added -->
       <div class="fSub">
-      <span>Upload your File:* </span><input name="fFileAttach" id="fFileAttach" type="file" required>
-      <input id="sendMessageTrigger" type="button">
+        <span>※上記で他代理店からの切替を選んだ方は現在の保険証券を添付してください</span><input name="fFileAttach" id="fFileAttach" type="file">
       </div>
+      <input id="sendMessageTrigger" type="button">送信
     </form>
 
-    <iframe name="sendMessage"  style="display: none;" style="width:0px;height:0px;border:0px;"></iframe>
+    <iframe name="sendMessage"  style="display: none;"></iframe>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script> <!-- Added -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
     <!-- Added -->
     <script>
-      var $form = $('#cc-form');
-      var $trigger = $('#sendMessageTrigger');
-      var $iframe = $('iframe[name="sendMessage"]');
+      const $form = $('#cc-form');
+      const $trigger = $('#sendMessageTrigger');
+      const $iframe = $('iframe[name="sendMessage"]');
 
       const liffId = "2007083053-YNDKlL8v";
       let userId = "";
