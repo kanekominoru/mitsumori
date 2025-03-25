@@ -29,10 +29,25 @@
 
   <!-- Added -->
   <script>
-    const myForm = document.querySelector("#cc-form");
-    myForm.addEventListener("submit", (event)=>{
-      event.preventDefault();
+    $('form').submit(function( event ) {
+        event.preventDefault();
+        $.post({
+            url: $(this).attr("action"),
+            dataType: "JSON",
+            data: new FormData(this),
+            processData: false,
+            contentType: false,
+          success: function (data, status)
+          {
+            console.log(data);
+          },
+          error: function (xhr, desc, err)
+          {
+            console.error(err);
+          } 
+        });
     });
+
     $('#fFileAttach').on("change", function() {
         var file = this.files[0];
         var fr = new FileReader();
