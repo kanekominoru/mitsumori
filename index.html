@@ -41,10 +41,8 @@
     //ajax実行
     $.ajax({
       url : "https://script.google.com/macros/s/AKfycbyLJibLUxEfNuwgN69IoFUGI5eEdr9Ne-QfyBihyUChf2nHV9drBFWswyTLl-obWDtCGA/exe",
-      headers: {
-        'Origin' : 'https://stone-lodge-454801-s3.script.googleusercontent.com',
-      },
       dataType: "html",
+      mode: 'no-cors',
       type : "post",
       data : formData,  // dataに FormDataを指定
       processData: false,  //ajaxがdataを整形しない指定
