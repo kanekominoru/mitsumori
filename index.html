@@ -21,18 +21,18 @@
       <!--------------------------->
       <div id="data"></div> <!-- Added -->
       <div class="fSub">
-      <span>Upload your File:* </span><input name="fFileAttach" id="fFileAttach" type="file" required>
-      <input id="submit" type="submit">
+        <span>Upload your File:* </span><input name="fFileAttach" id="fFileAttach" type="file" required>
+        <input id="submit" type="submit" onsubmit="return false;">
       </div>
-  </form>
+    </form>
   </body>
 
   <!-- Added -->
   <script>
-    const myForm = document.querySelector("#cc-form");
-    myForm.addEventListener("submit", (event)=>{
-      event.preventDefault();
-    });
+    // const myForm = document.querySelector("#cc-form");
+    // myForm.addEventListener("submit", (event)=>{
+    //   event.preventDefault();
+    // });
     $('#fFileAttach').on("change", function() {
         var file = this.files[0];
         var fr = new FileReader();
