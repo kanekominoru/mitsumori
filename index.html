@@ -5,7 +5,7 @@
 
   </head>
   <body>
-    <form action="https://script.google.com/macros/s/AKfycbyLJibLUxEfNuwgN69IoFUGI5eEdr9Ne-QfyBihyUChf2nHV9drBFWswyTLl-obWDtCGA/exec" id="cc-form" method="post">
+    <form action="https://script.google.com/macros/s/AKfycbyLJibLUxEfNuwgN69IoFUGI5eEdr9Ne-QfyBihyUChf2nHV9drBFWswyTLl-obWDtCGA/exec" id="cc-form" method="post" target="sendMessage">
       <div class="fTop">
         <span>Name:* </span><input name="txtName" type="text" placeholder="Your Name" id="fname" required="" autofocus>
         <span>E-Mail:* </span><input name="txtEmail" type="email" placeholder="Your e-Mail" id="femail" required="">
@@ -23,7 +23,7 @@
       </div>
     </form>
 
-    <iframe name="sendMessage" style="width:0px;height:0px;border:0px;"></iframe>
+    <iframe name="sendMessage"  style="display: none;" style="width:0px;height:0px;border:0px;"></iframe>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script> <!-- Added -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" crossorigin="anonymous"></script>
