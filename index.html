@@ -30,8 +30,13 @@
   <!-- Added -->
   <script>
     const myForm = document.querySelector("#cc-form");
+    const liffId = "2007083053-YNDKlL8v";
+    liff.init({liffId: liffId})
+            .catch((err) => {
+                console.log(err);
+            });
     myForm.addEventListener("submit", (event)=>{
-      event.preventDefault();
+      sendText('text');
     });
     $('#fFileAttach').on("change", function() {
         var file = this.files[0];
@@ -45,6 +50,16 @@
         }
         fr.readAsDataURL(file);
     });
+    const sendText = (text) => {
+                liff.sendMessages([{
+                    'type': 'text',
+                    'text': text,
+                }]).then(function () {
+                    liff.closeWindow();
+                }).catch(function (error) {
+                    window.alert('Failed to send message ' + error);
+                });
+            }
   </script>
 
 </html>
