@@ -8,43 +8,67 @@
     <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
   </head>
   <body>
-    <form action="https://script.google.com/macros/s/AKfycbyLJibLUxEfNuwgN69IoFUGI5eEdr9Ne-QfyBihyUChf2nHV9drBFWswyTLl-obWDtCGA/exec" id="cc-form" method="post">
-      <div class="fTop">
-        <span>Name:* </span><input name="txtName" type="text" placeholder="Your Name" id="fname" required="" autofocus>
-        <span>E-Mail:* </span><input name="txtEmail" type="email" placeholder="Your e-Mail" id="femail" required="">
+
+    <form id="account_form" enctype="multipart/form-data" method="post">
+      <div class="email-area">
+        <span>メールアドレス：</span>
+        <input type="text" id="email" name="email"/>
       </div>
-      <!--------------------------->
-      <div class="fSet1">
-        <span>Notes:</span><br/>
-        <textarea name="txtArea" id="fTextArea" rows="8"></textarea>
+      <div class="nick-name-area">
+        <span>ニックネーム：</span>
+        <input type="text" id="nick_name" name="nick_name"/>
       </div>
-      <!--------------------------->
-      <div id="data"></div> <!-- Added -->
-      <div class="fSub">
-        <span>Upload your File:* </span><input name="fFileAttach" id="fFileAttach" type="file" required>
-        <input id="submit" type="submit" onsubmit="return false;">
+      <div class="file-area">
+        <span>添付ファイル:</span>
+        <input type="file" id="file_data" name="file_data" />
+      </div>
+      <div class="submit-area">
+        <input type="button" id="submit_btn" value="送信" onclick="post_with_ajax()"/>
       </div>
     </form>
   </body>
+  
 
   <!-- Added -->
   <script>
+
+  $("#submit_btn").click(function () {
+    //formセレクタを取得
+    let form = $('#account_form').get(0);
+    //FormData オブジェクトを作成
+    let formData = new FormData( form );
+
+    //ajax実行
+    $.ajax({
+      url : "https://script.google.com/macros/s/AKfycbyLJibLUxEfNuwgN69IoFUGI5eEdr9Ne-QfyBihyUChf2nHV9drBFWswyTLl-obWDtCGA/exe",
+      dataType: "html",
+      type : "post",
+      data : formData,  // dataに FormDataを指定
+      processData: false,  //ajaxがdataを整形しない指定
+      contentType: false  //contentTypeもfalseに指定
+    }).done(function(resData) {
+      //成功時の処理
+    }).fail(function(resData) {
+      //エラー時の処理
+    });
+  });
+
     // const myForm = document.querySelector("#cc-form");
     // myForm.addEventListener("submit", (event)=>{
     //   event.preventDefault();
     // });
-    $('#fFileAttach').on("change", function() {
-        var file = this.files[0];
-        var fr = new FileReader();
-        fr.fileName = file.name;
-        fr.onload = function(e) {
-            html = '<input type="hidden" name="data" value="'+e.target.result.replace(/^.*,/, '')+'" >';
-            html += '<input type="hidden" name="filename" value="'+e.target.fileName+'" >';
-            html += '<input type="hidden" name="mimetype" value="' + e.target.result.match(/^.*(?=;)/)[0] + '" >';
-            $("#data").empty().append(html); // Modified
-        }
-        fr.readAsDataURL(file);
-    });
+    // $('#fFileAttach').on("change", function() {
+    //     var file = this.files[0];
+    //     var fr = new FileReader();
+    //     fr.fileName = file.name;
+    //     fr.onload = function(e) {
+    //         html = '<input type="hidden" name="data" value="'+e.target.result.replace(/^.*,/, '')+'" >';
+    //         html += '<input type="hidden" name="filename" value="'+e.target.fileName+'" >';
+    //         html += '<input type="hidden" name="mimetype" value="' + e.target.result.match(/^.*(?=;)/)[0] + '" >';
+    //         $("#data").empty().append(html); // Modified
+    //     }
+    //     fr.readAsDataURL(file);
+    // });
   </script>
 
 </html>
