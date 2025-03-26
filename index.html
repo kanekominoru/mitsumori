@@ -102,7 +102,6 @@
         if (target.parent().children().length < 4) {
           $(this).parent().clone(true).insertAfter($(this).parent());
         }
-        changeName();
       });
 
       $(document).on("click", ".del", function() {
@@ -110,7 +109,6 @@
         if (target.parent().children().length > 1) {
           target.remove();
         }
-        changeName();
       });
 
       $trigger.click(function() {
