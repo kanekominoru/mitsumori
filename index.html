@@ -13,43 +13,55 @@
   <body>
     <form action="https://script.google.com/macros/s/AKfycbyLJibLUxEfNuwgN69IoFUGI5eEdr9Ne-QfyBihyUChf2nHV9drBFWswyTLl-obWDtCGA/exec" id="cc-form" method="post" class="w-75 mx-auto" target="sendMessage">
       <div>
-      <div class="kintoneplugin-row">
+        <div class="kintoneplugin-row">
 
-        <input type="button" value="保険種目を追加" class="add pluralBtn">
-        <input type="button" value="保険種目を削除" class="del pluralBtn">
+          <input type="button" value="保険種目を追加" class="add pluralBtn">
+          <input type="button" value="保険種目を削除" class="del pluralBtn">
 
-        <p class="mt-3">見積を希望している保険種目をお教えください</p>
-        <div>
-            <select class="form-control w-100 mt-1" name="syumoku">
-                <option selected>自動車</option>
-                <option>火災</option>
-                <option>生命保険</option>
-                <option>その他</option>
-            </select>
-        </div>
-        <p class="mt-3">※上記で生命保険を選んだ方は生命保険の種目を選択してください</p>
-        <div>
-            <select class="form-control w-100 mt-1" name="seiho">
-                <option>-------</option>
-                <option>医療保険</option>
-                <option>がん保険</option>
-                <option>生命保険</option>
-            </select>
-        </div>
-        <p class="mt-3">希望する内容をお教えください</p>
-        <div>
-            <select class="form-control w-100 mt-1" name="kibonaiyo">
-                <option>他代理店からの切替</option>
-                <option>新規加入</option>
-            </select>
-        </div>
-        <div id="data"></div> <!-- Added -->
-        <p class="mt-3">※上記で他代理店からの切替を選んだ方は現在の保険証券を添付してください</p>
-        <div class="input-group mb-3 fSub">
-          <input type="file" class="form-control fFileAttach" id="inputGroupFile02" name="fFileAttach">
+          <p class="mt-3">見積を希望している保険種目をお教えください</p>
+          <div>
+              <select class="form-control w-100 mt-1" name="syumoku">
+                  <option selected>自動車</option>
+                  <option>火災</option>
+                  <option>生命保険</option>
+                  <option>その他</option>
+              </select>
+          </div>
+          <p class="mt-3">※上記で生命保険を選んだ方は生命保険の種目を選択してください</p>
+          <div>
+              <select class="form-control w-100 mt-1" name="seiho">
+                  <option>-------</option>
+                  <option>医療保険</option>
+                  <option>がん保険</option>
+                  <option>生命保険</option>
+              </select>
+          </div>
+          <p class="mt-3">希望する内容をお教えください</p>
+          <div>
+              <select class="form-control w-100 mt-1" name="kibonaiyo">
+                  <option>他代理店からの切替</option>
+                  <option>新規加入</option>
+              </select>
+          </div>
+          <div id="data"></div> <!-- Added -->
+          <p class="mt-3">※上記で他代理店からの切替を選んだ方は現在の保険証券を添付してください</p>
+          <div class="input-group mb-3 fSub">
+            <input type="file" class="form-control fFileAttach" id="inputGroupFile02" name="fFileAttach">
+          </div>
+          <p class="mt-3">連絡方法</p>
+          <div>
+              <select class="form-control w-100 mt-1" name="renraku">
+                  <option>電話連絡を希望したい</option>
+                  <option>このままチャットでの対応を希望</option>
+              </select>
+          </div>
+          <div>
+            <label for="tel">※上記で電話番号希望した方はこちらに記入してください</label>
+            <input type="tel" class="form-control" name="tel">
+          </div>
         </div>
       </div>
-      </div>
+      <input type="text" id="num" name="num" style="display: none;">
       <button id="sendMessageTrigger" type="button" class="btn btn-primary">送信</button>
     </form>
 
@@ -68,9 +80,9 @@
       const $form = $('#cc-form');
       const $trigger = $('#sendMessageTrigger');
       const $iframe = $('iframe[name="sendMessage"]');
-
       const liffId = "2007083053-YNDKlL8v";
       let userId = "";
+      let rowLen = 0;
       liff.init({liffId: liffId})
         .catch((err) => {
           console.log(err);
@@ -90,7 +102,6 @@
         if (target.parent().children().length < 4) {
           $(this).parent().clone(true).insertAfter($(this).parent());
         }
-        
       });
 
       $(document).on("click", ".del", function() {
@@ -98,66 +109,11 @@
         if (target.parent().children().length > 1) {
           target.remove();
         }
-        
       });
 
       $trigger.click(function() {
         
         changeName();
-
-
-        let insertHtml=`
-        <!-- loading -->
-        <div id="loading"">
-            <div class="cv-spinner">
-                <span class="spinner"></span>
-                <p>送信しています</p>
-            </div>
-        </div>
-        <!-- loading -->
-        `
-        let insertCSS=`
-        <style>
-            #loading{
-                position: fixed;
-                top: 0;
-                left: 0;
-                z-index: 999;
-                width: 100%;
-                height:100%;
-                background: rgba(0,0,0,0.6);
-            }
-            #loading .cv-spinner {
-                height: 100%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-            #loading .spinner {
-                width: 40px;
-                height: 40px;
-                border: 4px #ddd solid;
-                border-top: 4px #999 solid;
-                border-radius: 50%;
-                animation: sp-anime 0.8s infinite linear;
-            }
-            #loading p {
-                line-height: 40px;
-                margin: 0 0 0 8px;
-                text-align: center;
-                color: #ddd
-            }
-            @keyframes sp-anime {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(359deg); }
-            }
-            #loading.is-hide{
-                display:none;
-            }
-        </style>
-        `
-        document.getElementsByTagName('head')[0].insertAdjacentHTML('beforeend', insertCSS);
-        document.getElementsByTagName('body')[0].insertAdjacentHTML('afterbegin', insertHtml);
 
         $form.submit();
 
@@ -169,7 +125,60 @@
       $form.submit(function() {
         $iframe.unbind().bind('load', function() {
           // 結果が見たい場合はココで処理
-          // sendText('text');
+
+        let insertHtml=`
+          <!-- loading -->
+          <div id="loading"">
+              <div class="cv-spinner">
+                  <span class="spinner"></span>
+                  <p>送信しています</p>
+              </div>
+          </div>
+          <!-- loading -->
+          `
+        let insertCSS=`
+          <style>
+              #loading{
+                  position: fixed;
+                  top: 0;
+                  left: 0;
+                  z-index: 999;
+                  width: 100%;
+                  height:100%;
+                  background: rgba(0,0,0,0.6);
+              }
+              #loading .cv-spinner {
+                  height: 100%;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+              }
+              #loading .spinner {
+                  width: 40px;
+                  height: 40px;
+                  border: 4px #ddd solid;
+                  border-top: 4px #999 solid;
+                  border-radius: 50%;
+                  animation: sp-anime 0.8s infinite linear;
+              }
+              #loading p {
+                  line-height: 40px;
+                  margin: 0 0 0 8px;
+                  text-align: center;
+                  color: #ddd
+              }
+              @keyframes sp-anime {
+                  0% { transform: rotate(0deg); }
+                  100% { transform: rotate(359deg); }
+              }
+              #loading.is-hide{
+                  display:none;
+              }
+          </style>
+          `
+          document.getElementsByTagName('head')[0].insertAdjacentHTML('beforeend', insertCSS);
+          document.getElementsByTagName('body')[0].insertAdjacentHTML('afterbegin', insertHtml);
+          sendText('text');
         });
       });
 
@@ -187,7 +196,8 @@
       });
 
       const changeName = () => {
-        let rowLen = document.querySelectorAll(".kintoneplugin-row").length;
+        rowLen = document.querySelectorAll(".kintoneplugin-row").length;
+        document.querySelector("#num").value = rowLen;
         let bl = false;
         if (document.querySelector('input[name*="data"]')){
           bl = true;
@@ -197,6 +207,8 @@
           $('select[name*="seiho"]').eq(i).attr('name', 'seiho' + String(i));
           $('select[name*="kibonaiyo"]').eq(i).attr('name', 'kibonaiyo' + String(i));
           $('select[name*="fFileAttach"]').eq(i).attr('name', 'fFileAttach' + String(i));
+          $('select[name*="renraku"]').eq(i).attr('name', 'renraku' + String(i));
+          $('select[name*="tel"]').eq(i).attr('name', 'tel' + String(i));
           if (bl) {
             $('input[name*="data"]').eq(i).attr('name', 'data' + String(i));
             $('input[name*="filename"]').eq(i).attr('name', 'filename' + String(i));
