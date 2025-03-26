@@ -94,7 +94,7 @@
 
       $(document).on("click", ".del", function() {
         let target = $(this).parent();
-        if (target.length > 1) {
+        if (target.parent().children().length > 1) {
           target.remove();
           changeName();
         }
