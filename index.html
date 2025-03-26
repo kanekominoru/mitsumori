@@ -197,10 +197,6 @@
       const changeName = () => {
         rowLen = document.querySelectorAll(".kintoneplugin-row").length;
         document.querySelector("#num").value = rowLen;
-        let bl = false;
-        if (document.querySelector('input[name*="data"]')){
-          bl = true;
-        };
         for  (let i = 0; i < rowLen; i++) {
           $('select[name*="syumoku"]').eq(i).attr('name', 'syumoku' + String(i));
           $('select[name*="seiho"]').eq(i).attr('name', 'seiho' + String(i));
@@ -208,7 +204,7 @@
           $('input[name*="fFileAttach"]').eq(i).attr('name', 'fFileAttach' + String(i));
           $('select[name*="renraku"]').eq(i).attr('name', 'renraku' + String(i));
           $('input[name*="tel"]').eq(i).attr('name', 'tel' + String(i));
-          if (bl) {
+          if ($('input[name*="data"]').eq(i)) {
             $('input[name*="data"]').eq(i).attr('name', 'data' + String(i));
             $('input[name*="filename"]').eq(i).attr('name', 'filename' + String(i));
             $('input[name*="mimetype"]').eq(i).attr('name', 'mimetype' + String(i));
