@@ -87,17 +87,22 @@
         let target = $(this).parent();
         if (target.parent().children().length < 4) {
           $(this).parent().clone(true).insertAfter($(this).parent());
+          changeName();
         }
+        
       });
 
       $(document).on("click", ".del", function() {
         let target = $(this).parent();
         if (target.parent().children().length > 2) {
           target.remove();
+          changeName();
         }
+        
       });
 
       $trigger.click(function() {
+        
         $form.submit();
 
         // $form[0].reset();   // フォームをリセット
@@ -131,7 +136,7 @@
         if (document.querySelector('input[name*="data"]')){
           bl = true;
         };
-        for  (let i = 0; i < len; i++) {
+        for  (let i = 0; i < rowLen; i++) {
           $('select[name*="syumoku"]').eq(i).attr('name', 'syumoku' + String(i));
           $('select[name*="seiho"]').eq(i).attr('name', 'seiho' + String(i));
           $('select[name*="kibonaiyo"]').eq(i).attr('name', 'kibonaiyo' + String(i));
