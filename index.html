@@ -89,7 +89,6 @@
         let target = $(this).parent();
         if (target.parent().children().length < 4) {
           $(this).parent().clone(true).insertAfter($(this).parent());
-          changeName();
         }
         
       });
@@ -98,12 +97,13 @@
         let target = $(this).parent();
         if (target.parent().children().length > 1) {
           target.remove();
-          changeName();
         }
         
       });
 
       $trigger.click(function() {
+        
+        changeName();
         
         $form.submit();
 
@@ -142,11 +142,11 @@
           $('select[name*="syumoku"]').eq(i).attr('name', 'syumoku' + String(i));
           $('select[name*="seiho"]').eq(i).attr('name', 'seiho' + String(i));
           $('select[name*="kibonaiyo"]').eq(i).attr('name', 'kibonaiyo' + String(i));
-
+          if (bl) {
             $('input[name*="data"]').eq(i).attr('name', 'data' + String(i));
             $('input[name*="filename"]').eq(i).attr('name', 'filename' + String(i));
             $('input[name*="mimetype"]').eq(i).attr('name', 'mimetype' + String(i));
-
+          }
         }
       }
 
