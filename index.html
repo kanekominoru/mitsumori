@@ -309,10 +309,17 @@
       }
 
       const sendText = (tblText) => {
-        liff.sendMessages(tblText)
-        .catch(function (error) {
+        if (liff.isInClient()) {
+          liff.sendMessages(tblText)
+          .catch(function (error) {
             window.alert('Failed to send message ' + error);
-        });
+          });
+        } else {
+          liff.shareTargetPicker(tblText)
+          .catch(function (error) {
+            window.alert('Failed to send message ' + error);
+          });
+        }
       }
 
     </script>
