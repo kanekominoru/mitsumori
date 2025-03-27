@@ -60,8 +60,12 @@
               </select>
           </div>
           <div>
-            <label for="tel">※上記で電話番号希望した方はこちらに記入してください</label>
+            <label for="tel">※上記で電話番号希望した方はこちらに電話番号を記入してください</label>
             <input type="tel" class="form-control" name="tel0">
+          </div>
+          <div>
+            <label for="tel">※上記で電話番号希望した方は連絡希望日時を教えてください</label>
+            <input type="text" id="datepicker" placeholder="連絡希望日時を選択してください" class="form-control js-super-picker w-100 mt-1" name="kibonichizi0" required>
           </div>
         </div>
       </div>
@@ -87,6 +91,27 @@
       const liffId = "2007083053-YNDKlL8v";
       let userId = "";
       let rowLen = 0;
+      const datepicker = document.getElementById('datepicker');
+      const picker = new Picker(datepicker, {
+          container: '.js-super-picker-container',
+          format: 'YYYY/MM/DD HH:mm',
+          text: {
+              title: '連絡希望日時をお選びください。',
+              cancel: 'やめる',
+              confirm: '確認',
+          },
+          translate(type, text) {
+            const suffixes = {
+                                year: '年',
+                                month: '月',
+                                day: '日',
+                                hour: '時',
+                                minute: '分',
+                            };
+
+            return Number(text) + suffixes[type];
+          },
+      });
       liff.init({liffId: liffId})
         .catch((err) => {
           console.log(err);
@@ -219,6 +244,7 @@
           $('input[name*="fFileAttach"]').eq(i).attr('name', 'fFileAttach' + String(i));
           $('select[name*="renraku"]').eq(i).attr('name', 'renraku' + String(i));
           $('input[name*="tel"]').eq(i).attr('name', 'tel' + String(i));
+          $('input[name*="kibonichizi"]').eq(i).attr('name', 'tel' + String(i));
           $('div[id*="data"]').eq(i).attr('id', 'data' + String(i));
           $('input[name*="data"]').eq(i).attr('name', 'data' + String(i));
           $('input[name*="filename"]').eq(i).attr('name', 'filename' + String(i));
