@@ -324,8 +324,7 @@
       }
 
       const sendText = (tblText) => {
-          liff.sendMessages(tblText)({
-          })
+          liff.sendMessages(tblText)
           .then(() => {
             liff.closeWindow();
           })
