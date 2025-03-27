@@ -266,14 +266,17 @@
             ];
             
             if (bl) {
-              await sendText(tblURI);
-              await sendText(tblPush);
-              await sendText(tblText);
+              await sendText(tblURI)
+              .then(()=>sendText(tblPush))
+              .then(()=>sendText(tblText))
+              .catch(console.log(error))
+              .finally(liff.closeWindow());
             } else {
-              await sendText(tblText);
+              await sendText(tblText)
+              .catch(console.log(error))
+              .finally(liff.closeWindow());
             }
             
-            await liff.closeWindow();
           });
       });
 
