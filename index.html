@@ -267,14 +267,14 @@
             
             if (bl) {
               const promise = liff.sendMessages(tblURI)
-              .then(liff.sendMessages(tblPush))
-              .then(liff.sendMessages(tblText))
+              .then(setTimeout(liff.sendMessages(tblPush),1000))
+              .then(setTimeout(liff.sendMessages(tblText),1000))
               .catch(function (error) {
                 window.alert('Failed to send message ' + error);
               })
               // .finally(liff.closeWindow());
             } else {
-              const promise = liff.sendMessages(tblURI)
+              const promise = liff.sendMessages(tblText)
               .catch(function (error) {
                 window.alert('Failed to send message ' + error);
               })
