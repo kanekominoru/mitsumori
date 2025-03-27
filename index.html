@@ -258,16 +258,17 @@
                   "type": "text",
                   // "label": "自動車保険見積",
                   "text": "https://www.sunvertex.co.jp/service/life-support/GoAuto_one.htm"
-                }
-              ];
-              const tblPush =  [
+                },
                 {
                   "type": "text",
                   "text": "※自動車保険の見積希望に関しましては上記URLからご確認お願い致します。"
                 }
               ];
+              const tblPush =  [
+
+              ];
               await sendText(tblURI);
-              await sendText(tblPush);
+              // await sendText(tblPush);
             }
             await sendText(tblText);
             liff.closeWindow();
