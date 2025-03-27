@@ -253,29 +253,39 @@
               } 
             ];
             if (bl) {
-              const tblURI =  [
-                {
-                  "type": "text",
-                  "label": "※自動車保険の見積希望に関しましてはURLからご確認お願い致します。",
-                  "text": "https://www.sunvertex.co.jp/service/life-support/GoAuto_one.htm"
-                },
-                // {
-                //   "type": "text",
-                //   "text": "※自動車保険の見積希望に関しましては上記URLからご確認お願い致します。"
-                // },
-                {
-                "type": "text",
-                "text": "回答いただきありがとうございます。\n確認を行い、折り返し担当から連絡を行わせて頂きます。"
-                } 
-              ];
-              const tblPush =  [
-
-              ];
-              await sendText(tblURI);
-              // await sendText(tblPush);
+              const tblPush =  [{
+                "type": "flex",
+                "altText": "✅送信しました",
+                "contents": {
+                  "type": "bubble",
+                  "body": {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                        {
+                        "type": "text",
+                        "text": "回答いただきありがとうございます。\n確認を行い、折り返し担当から連絡を行わせて頂きます。"
+                        }, 
+                        {
+                          "type": "text",
+                          "text": "https://www.sunvertex.co.jp/service/life-support/GoAuto_one.htm"
+                        },
+                        {
+                          "type": "separator",
+                          "margin": "lg"
+                        },
+                        {
+                          "type": "text",
+                          "text": "※自動車保険の見積希望に関しましては上記URLからご確認お願い致します。"
+                        },
+                      ]
+                  }
+                }
+              }];
+              await sendText(tblPush);
+            } else {
+              await sendText(tblText);
             }
-            await sendText(tblText);
-            liff.closeWindow();
           });
       });
 
@@ -314,18 +324,16 @@
       }
 
       const sendText = (tblText) => {
-        if (liff.isInClient()) {
-          liff.sendMessages(tblText)
-          .catch(function (error) {
-            window.alert('Failed to send message ' + error);
-          });
-        } else {
-          liff.shareTargetPicker(tblText)
+          liff.sendMessages(tblText)({
+          })
+          .then(() => {
+            liff.closeWindow();
+          })
           .catch(function (error) {
             window.alert('Failed to send message ' + error);
           });
         }
-      }
+
 
     </script>
 
