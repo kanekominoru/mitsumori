@@ -176,6 +176,8 @@
 
         $form.submit();
 
+        // $form[0].reset();   // フォームをリセット
+
         return false;
       });
 
@@ -233,7 +235,49 @@
           document.getElementsByTagName('head')[0].insertAdjacentHTML('beforeend', insertCSS);
           document.getElementsByTagName('body')[0].insertAdjacentHTML('afterbegin', insertHtml);
           $iframe.unbind().bind('load', function() {
-            closeWebApp();
+            // 自動車保険はプッシュでURL送付
+            let bl = false;
+            for  (let i = 0; i < rowLen; i++) {
+              const syumoku = $('select[name*="syumoku"]').eq(i).val();
+              const kibonaiyo = $('select[name*="kibonaiyo"]').eq(i).val();
+              if (syumoku === "自動車" && kibonaiyo === "新規加入"){
+                bl = true
+                break;
+              }
+            }
+
+            const tblText = [{
+              "type": "text",
+              "text": "回答いただきありがとうございます。\n確認を行い、折り返し担当から連絡を行わせて頂きます。"
+            }];
+            if (bl) {
+              const tblURL =  [
+                {
+                  "type": "text",
+                  "text": "自動車保険見積",
+                  "quickReply": {
+                    "items": [
+                      {
+                        "type": "action",
+                        "action": {
+                          "type": "uri",
+                          "label": "見積を見る",
+                          "uri": "https://www.sunvertex.co.jp/service/life-support/GoAuto_one.htm"
+                        }
+                      },
+                    ]
+                  }
+                }
+              ];
+              const tblPush =  [{
+                      "type": "text",
+                      "text": "※自動車保険の見積希望に関しましては上記URLからご確認お願い致します。。"
+                    }];
+              sendText(tblURL);
+              sendText(tblPush);
+            }
+            sendText(tblText);
+            liff.closeWindow();
           });
       });
 
@@ -271,8 +315,8 @@
         }
       }
 
-      const closeWebApp = () => {
-        liff.closeWindow()
+      const sendText = (tblText) => {
+        liff.sendMessages(tblText)
         .catch(function (error) {
             window.alert('Failed to send message ' + error);
         });
