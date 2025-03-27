@@ -272,13 +272,13 @@
               .catch(function (error) {
                 window.alert('Failed to send message ' + error);
               })
-              .finally(liff.closeWindow());
+              // .finally(liff.closeWindow());
             } else {
               const promise = liff.sendMessages(tblURI)
               .catch(function (error) {
                 window.alert('Failed to send message ' + error);
               })
-              .finally(liff.closeWindow());
+              // .finally(liff.closeWindow());
             }
           });
       });
