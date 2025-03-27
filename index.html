@@ -268,20 +268,20 @@
             if (bl) {
               const promise = new Promise((resolve)=> {
                 sendText(tblURI);
-              }).then((resolve)=>{
+              }).then(()=>{
                 window.alert("tblURL");
                 sendText(tblPush);
-              }).then((resolve)=>{
+              }).then(()=>{
                 window.alert("tblPush");
                 sendText(tblText)
-              }).finally((resolve)=>{
+              }).finally(()=>{
                 window.alert("tblText");
                 liff.closeWindow();
               });
             } else {
               const promise = new Promise((resolve)=> {
                 sendText(tblText);
-              }).finally((resolve)=>{
+              }).finally(()=>{
                 window.alert("tblText");
                 liff.closeWindow();
               });
