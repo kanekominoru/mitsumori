@@ -176,8 +176,6 @@
 
         $form.submit();
 
-        // $form[0].reset();   // フォームをリセット
-
         return false;
       });
 
@@ -235,37 +233,7 @@
           document.getElementsByTagName('head')[0].insertAdjacentHTML('beforeend', insertCSS);
           document.getElementsByTagName('body')[0].insertAdjacentHTML('afterbegin', insertHtml);
           $iframe.unbind().bind('load', function() {
-            // 自動車保険はプッシュでURL送付
-            let bl = false;
-            for  (let i = 0; i < rowLen; i++) {
-              const syumoku = $('select[name*="syumoku"]').eq(i).val();
-              const kibonaiyo = $('select[name*="kibonaiyo"]').eq(i).val();
-              if (syumoku === "自動車" && kibonaiyo === "新規加入"){
-                bl = true
-                break;
-              }
-            }
-
-            let tblText = [];
-            const objText = {
-              "type": "text",
-              "text": "回答いただきありがとうございます。\n確認を行い、折り返し担当から連絡を行わせて頂きます。"
-            };
-            tblText.push(objText);
-            if (bl) {
-              const objURL =  {
-                      "type": "uri",
-                      "label": "WEB見積りサービスサイトへ",
-                      "uri": "https://www.sunvertex.co.jp/service/life-support/GoAuto_one.htm",
-                    }
-              const objPush =  {
-                      "type": "text",
-                      "text": "※自動車保険の見積希望に関しましては上記URLからご確認お願い致します。。"
-                    }
-              tblText.push(objURL);
-              tblText.push(objPush);
-            }
-            sendText(tblText);
+            closeWebApp();
           });
       });
 
@@ -303,11 +271,9 @@
         }
       }
 
-      const sendText = (tblText) => {
-        liff.sendMessages(tblText)
-        .then(function () {
-            liff.closeWindow();
-        }).catch(function (error) {
+      const closeWebApp = () => {
+        liff.closeWindow()
+        .catch(function (error) {
             window.alert('Failed to send message ' + error);
         });
       }
