@@ -234,7 +234,7 @@
             `
           document.getElementsByTagName('head')[0].insertAdjacentHTML('beforeend', insertCSS);
           document.getElementsByTagName('body')[0].insertAdjacentHTML('afterbegin', insertHtml);
-          $iframe.unbind().bind('load', async () => {
+          $iframe.unbind().bind('load', async function() {
             // 自動車保険はプッシュでURL送付
             let bl = false;
             for  (let i = 0; i < rowLen; i++) {
@@ -245,41 +245,32 @@
                 break;
               }
             }
+
             const tblText = [
               {
                 "type": "text",
                 "text": "回答いただきありがとうございます。\n確認を行い、折り返し担当から連絡を行わせて頂きます。"
               } 
             ];
-            const tblURI =  [
+            if (bl) {
+              const tblURI =  [
                 {
                   "type": "text",
                   // "label": "自動車保険見積",
                   "text": "https://www.sunvertex.co.jp/service/life-support/GoAuto_one.htm"
                 }
               ];
-            const tblPush =  [
+              const tblPush =  [
                 {
                   "type": "text",
                   "text": "※自動車保険の見積希望に関しましては上記URLからご確認お願い致します。"
                 }
-            ];
-            
-            if (bl) {
-              const promise = liff.sendMessages(tblURI)
-              .then(setTimeout(liff.sendMessages(tblPush),1000))
-              .then(setTimeout(liff.sendMessages(tblText),1000))
-              .catch(function (error) {
-                window.alert('Failed to send message ' + error);
-              })
-              // .finally(liff.closeWindow());
-            } else {
-              const promise = liff.sendMessages(tblText)
-              .catch(function (error) {
-                window.alert('Failed to send message ' + error);
-              })
-              // .finally(liff.closeWindow());
+              ];
+              await sendText(tblURI);
+              await sendText(tblPush);
             }
+            await sendText(tblText);
+            liff.closeWindow();
           });
       });
 
