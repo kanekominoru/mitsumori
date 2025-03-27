@@ -269,20 +269,20 @@
               const promise = new Promise((resolve)=> {
                 sendText(tblURI);
               }).then((resolve)=>{
-                console.log("tblURL");
+                window.alert("tblURL");
                 sendText(tblPush);
               }).then((resolve)=>{
-                console.log("tblPush");
+                window.alert("tblPush");
                 sendText(tblText)
               }).finally((resolve)=>{
-                console.log("tblText");
+                window.alert("tblText");
                 liff.closeWindow();
               });
             } else {
               const promise = new Promise((resolve)=> {
                 sendText(tblText);
               }).finally((resolve)=>{
-                console.log("tblText");
+                window.alert("tblText");
                 liff.closeWindow();
               });
             }
