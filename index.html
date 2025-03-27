@@ -238,7 +238,7 @@
             // 自動車保険はプッシュでURL送付
             let bl = false;
             for  (let i = 0; i < rowLen; i++) {
-              const syumoku =('select[name*="syumoku"]').eq(i).val();
+              const syumoku = $('select[name*="syumoku"]').eq(i).val();
               const kibonaiyo = $('select[name*="kibonaiyo"]').eq(i).val();
               if (syumoku === "自動車" && kibonaiyo === "新規加入"){
                 bl = true
