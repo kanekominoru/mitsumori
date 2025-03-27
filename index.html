@@ -251,29 +251,18 @@
               "text": "回答いただきありがとうございます。\n確認を行い、折り返し担当から連絡を行わせて頂きます。"
             }];
             if (bl) {
-              const tblURL =  [
+              const tblURI =  [
                 {
-                  "type": "text",
-                  "text": "自動車保険見積",
-                  "quickReply": {
-                    "items": [
-                      {
-                        "type": "action",
-                        "action": {
-                          "type": "uri",
-                          "label": "見積を見る",
-                          "uri": "https://www.sunvertex.co.jp/service/life-support/GoAuto_one.htm"
-                        }
-                      },
-                    ]
-                  }
+                  "type": "uri",
+                  "label": "自動車保険見積",
+                  "uri": "https://www.sunvertex.co.jp/service/life-support/GoAuto_one.htm"
                 }
               ];
               const tblPush =  [{
                       "type": "text",
                       "text": "※自動車保険の見積希望に関しましては上記URLからご確認お願い致します。。"
                     }];
-              sendText(tblURL);
+              sendText(tblURI);
               sendText(tblPush);
             }
             sendText(tblText);
