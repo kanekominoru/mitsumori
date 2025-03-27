@@ -274,14 +274,14 @@
               }).then((resolve)=>{
                 console.log("tblPush");
                 sendText(tblText)
-              }).then((resolve)=>{
+              }).finally((resolve)=>{
                 console.log("tblText");
                 liff.closeWindow();
               });
             } else {
               const promise = new Promise((resolve)=> {
                 sendText(tblText);
-              }).then((resolve)=>{
+              }).finally((resolve)=>{
                 console.log("tblText");
                 liff.closeWindow();
               });
