@@ -64,7 +64,7 @@
             <input type="tel" class="form-control" name="tel0">
           </div>
           <div>
-            <label for="tel">※上記で電話番号希望した方は連絡希望日時を教えてください</label>
+            <label for="tel">※上記で電話番号希望した方は連絡希望日時を教えてください<br>※弊社営業時間は平日8：30～17：30となります</label>
             <input type="text" id="datepicker" placeholder="連絡希望日時を選択してください" class="form-control js-super-picker w-100 mt-1" name="kibonichizi0" required>
           </div>
         </div>
@@ -235,8 +235,37 @@
           document.getElementsByTagName('head')[0].insertAdjacentHTML('beforeend', insertCSS);
           document.getElementsByTagName('body')[0].insertAdjacentHTML('afterbegin', insertHtml);
           $iframe.unbind().bind('load', function() {
-            // 結果が見たい場合はココで処理
-            sendText('text');
+            // 自動車保険はプッシュでURL送付
+            let bl = false;
+            for  (let i = 0; i < rowLen; i++) {
+              const syumoku =('select[name*="syumoku"]').eq(i).val();
+              const kibonaiyo = $('select[name*="kibonaiyo"]').eq(i).val();
+              if (syumoku === "自動車" && kibonaiyo === "新規加入"){
+                bl = true
+                break;
+              }
+            }
+
+            let tblText = [];
+            const objText = {
+              "type": "text",
+              "text": "回答いただきありがとうございます。\n確認を行い、折り返し担当から連絡を行わせて頂きます。"
+            };
+            tblText.push(objText);
+            if (bl) {
+              const objURL =  {
+                      "type": "uri",
+                      "label": "WEB見積りサービスサイトへ",
+                      "uri": "https://www.sunvertex.co.jp/service/life-support/GoAuto_one.htm",
+                    }
+              const objPush =  {
+                      "type": "text",
+                      "text": "※自動車保険の見積希望に関しましては上記URLからご確認お願い致します。。"
+                    }
+              tblText.push(objURL);
+              tblText.push(objPush);
+            }
+            sendText(tblText);
           });
       });
 
@@ -274,11 +303,9 @@
         }
       }
 
-      const sendText = (text) => {
-        liff.sendMessages([{
-            'type': 'text',
-            'text': text,
-        }]).then(function () {
+      const sendText = (tblText) => {
+        liff.sendMessages(tblText)
+        .then(function () {
             liff.closeWindow();
         }).catch(function (error) {
             window.alert('Failed to send message ' + error);
