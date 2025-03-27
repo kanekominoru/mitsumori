@@ -266,25 +266,19 @@
             ];
             
             if (bl) {
-              const promise = new Promise((resolve)=> {
-                sendText(tblURI);
-              }).then(()=>{
-                window.alert("tblURL");
-                sendText(tblPush);
-              }).then(()=>{
-                window.alert("tblPush");
-                sendText(tblText)
-              }).finally(()=>{
-                window.alert("tblText");
-                liff.closeWindow();
-              });
+              const promise = liff.sendMessages(tblURI)
+              .then(liff.sendMessages(tblPush))
+              .then(liff.sendMessages(tblText))
+              .catch(function (error) {
+                window.alert('Failed to send message ' + error);
+              })
+              .finally(liff.closeWindow());
             } else {
-              const promise = new Promise((resolve)=> {
-                sendText(tblText);
-              }).finally(()=>{
-                window.alert("tblText");
-                liff.closeWindow();
-              });
+              const promise = liff.sendMessages(tblURI)
+              .catch(function (error) {
+                window.alert('Failed to send message ' + error);
+              })
+              .finally(liff.closeWindow());
             }
           });
       });
