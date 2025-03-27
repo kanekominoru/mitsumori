@@ -266,17 +266,26 @@
             ];
             
             if (bl) {
-              await sendText(tblURI)
-              .then(()=>sendText(tblPush))
-              .then(()=>sendText(tblText))
-              .catch(console.log(error))
-              .finally(liff.closeWindow());
+              const promise = new Promise((resolve)=> {
+                sendText(tblURI);
+              }).then((resolve)=>{
+                console.log("tblURL");
+                sendText(tblPush);
+              }).then((resolve)=>{
+                console.log("tblPush");
+                sendText(tblText)
+              }).then((resolve)=>{
+                console.log("tblText");
+                liff.closeWindow();
+              });
             } else {
-              await sendText(tblText)
-              .catch(console.log(error))
-              .finally(liff.closeWindow());
+              const promise = new Promise((resolve)=> {
+                sendText(tblText);
+              }).then((resolve)=>{
+                console.log("tblText");
+                liff.closeWindow();
+              });
             }
-            
           });
       });
 
