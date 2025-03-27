@@ -266,12 +266,14 @@
             ];
             
             if (bl) {
-              await Promise.all([sendText(tblURI), sendText(tblPush), sendText(tblText)]);
+              await sendText(tblURI);
+              await sendText(tblPush);
+              await sendText(tblText);
             } else {
               await sendText(tblText);
             }
             
-            liff.closeWindow();
+            await liff.closeWindow();
           });
       });
 
