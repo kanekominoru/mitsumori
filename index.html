@@ -235,9 +235,6 @@
           document.getElementsByTagName('head')[0].insertAdjacentHTML('beforeend', insertCSS);
           document.getElementsByTagName('body')[0].insertAdjacentHTML('afterbegin', insertHtml);
           $iframe.unbind().bind('load', async function() {
-            const func1 = sendText(tblURI);
-            const func2 = sendText(tblPush);
-            const func3 = sendText(tblText);
             // 自動車保険はプッシュでURL送付
             let bl = false;
             for  (let i = 0; i < rowLen; i++) {
@@ -267,6 +264,10 @@
                   "text": "※自動車保険の見積希望に関しましては上記URLからご確認お願い致します。"
                 }
               ];
+            const func1 = sendText(tblURI);
+            const func2 = sendText(tblPush);
+            const func3 = sendText(tblText);
+            
             if (bl) {
               await Promise.all([func1, func2, func3]);
             } else {
