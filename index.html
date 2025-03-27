@@ -245,31 +245,34 @@
                 break;
               }
             }
-
             const tblText = [
               {
                 "type": "text",
                 "text": "回答いただきありがとうございます。\n確認を行い、折り返し担当から連絡を行わせて頂きます。"
               } 
             ];
-            if (bl) {
-              const tblURI =  [
+            const tblURI =  [
                 {
                   "type": "text",
                   // "label": "自動車保険見積",
                   "text": "https://www.sunvertex.co.jp/service/life-support/GoAuto_one.htm"
                 }
               ];
-              const tblPush =  [
+            const tblPush =  [
                 {
                   "type": "text",
                   "text": "※自動車保険の見積希望に関しましては上記URLからご確認お願い致します。"
                 }
               ];
-              await sendText(tblURI);
-              await sendText(tblPush);
+            if (bl) {
+              const func1 = sendText(tblURI);
+              const func2 = sendText(tblPush);
+              const func3 = sendText(tblText);
+              await Promise.all([func1, func2, func3]);
+            } else {
+              await sendText(tblText);
             }
-            await sendText(tblText);
+            
             liff.closeWindow();
           });
       });
