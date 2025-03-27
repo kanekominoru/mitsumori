@@ -253,36 +253,38 @@
               } 
             ];
             if (bl) {
-              const tblPush =  [{
+              const tblPush =  [
+                {
                 "type": "flex",
                 "altText": "✅送信しました",
                 "contents": {
                   "type": "bubble",
                   "body": {
                     "type": "box",
-                    "layout": "vertical",
+                    "layout": "horizontal",
                     "contents": [
-                        {
+                    {
+                      "type": "text",
+                      "text": "回答いただきありがとうございます。\n確認を行い、折り返し担当から連絡を行わせて頂きます。"
+                      }, 
+                      {
+                        "type": "uri",
+                        "label": "見積相談の入力",
+                        "uri": "https://www.sunvertex.co.jp/service/life-support/GoAuto_one.htm",
+                      },
+                      {
+                        "type": "separator",
+                        "margin": "lg"
+                      },
+                      {
                         "type": "text",
-                        "text": "回答いただきありがとうございます。\n確認を行い、折り返し担当から連絡を行わせて頂きます。"
-                        }, 
-                        {
-                          "type": "uri",
-                          "label": "見積相談の入力",
-                          "uri": "https://www.sunvertex.co.jp/service/life-support/GoAuto_one.htm",
-                        },
-                        {
-                          "type": "separator",
-                          "margin": "lg"
-                        },
-                        {
-                          "type": "text",
-                          "text": "※自動車保険の見積希望に関しましては上記URLからご確認お願い致します。"
-                        },
-                      ]
+                        "text": "※自動車保険の見積希望に関しましては上記URLからご確認お願い致します。"
+                      },
+                    ]
                   }
                 }
-              }];
+              }
+            ];
               await sendText(tblPush);
             } else {
               await sendText(tblText);
